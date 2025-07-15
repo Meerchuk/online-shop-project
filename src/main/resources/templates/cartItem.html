@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #ffffff;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #1e1e1e;
+            box-shadow: 0 0 10px #000;
+        }
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #333;
+            text-align: left;
+        }
+        th {
+            background-color: #2a2a2a;
+        }
+        tr:hover {
+            background-color: #333;
+        }
+        img.product-image {
+            max-width: 80px;
+            height: auto;
+            border-radius: 8px;
+        }
+        .price, .quantity {
+            text-align: right;
+        }
+        .total {
+            font-weight: bold;
+            font-size: 1.2em;
+            text-align: right;
+            margin-top: 20px;
+        }
+        footer {
+            margin-top: 40px;
+            padding: 15px;
+            background-color: #1f1f1f;
+            color: #777;
+            text-align: center;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Shopping Cart</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Product Image</th>
+        <th>Product Name</th>
+        <th>Price (USD)</th>
+        <th>Quantity</th>
+    </tr>
+    </thead>
+    <tbody id="cart-items">
+
+    </tbody>
+</table>
+
+<div class="total" id="cart-total-price">
+    Total Price: $0
+</div>
+
+<script>
+    const cartItems = [
+        {
+            id: 1,
+            productId: 101,
+            productName: "Wireless Mouse",
+            productPrice: 25,
+            productImageUrl: "https://via.placeholder.com/80?text=Mouse",
+            quantity: 2
+        },
+        {
+            id: 2,
+            productId: 202,
+            productName: "Mechanical Keyboard",
+            productPrice: 80,
+            productImageUrl: "https://via.placeholder.com/80?text=Keyboard",
+            quantity: 1
+        }
+    ];
+
+    function renderCartItems(items) {
+        const tbody = document.getElementById("cart-items");
+        tbody.innerHTML = ""; // clear previous rows
+
+        let totalPrice = 0;
+
+        items.forEach(item => {
+            totalPrice += item.productPrice * item.quantity;
+
+            const tr = document.createElement("tr");
+
+            const imgTd = document.createElement("td");
+            const img = document.createElement("img");
+            img.src = item.productImageUrl;
+            img.alt = item.productName;
+            img.className = "product-image";
+            imgTd.appendChild(img);
+            tr.appendChild(imgTd);
+
+            const nameTd = document.createElement("td");
+            nameTd.textContent = item.productName;
+            tr.appendChild(nameTd);
+
+            const priceTd = document.createElement("td");
+            priceTd.textContent = "$" + item.productPrice.toFixed(2);
+            priceTd.className = "price";
+            tr.appendChild(priceTd);
+
+            const quantityTd = document.createElement("td");
+            quantityTd.textContent = item.quantity;
+            quantityTd.className = "quantity";
+            tr.appendChild(quantityTd);
+
+            tbody.appendChild(tr);
+        });
+
+        document.getElementById("cart-total-price").textContent = "Total Price: $" + totalPrice.toFixed(2);
+    }
+
+    renderCartItems(cartItems);
+</script>
+
+<footer>
+    © 2025 Developed by Meerchuk Roman
+</footer>
+
+</body>
+</html>

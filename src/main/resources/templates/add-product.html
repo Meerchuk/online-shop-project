@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Product</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            background-color: #121212;
+            color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .form-container {
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            width: 400px;
+            margin: 0 auto;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: none;
+            box-sizing: border-box;
+        }
+        input {
+            background-color: #2e2e2e;
+            color: #f0f0f0;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .error {
+            color: #ff6b6b;
+            font-size: 0.9em;
+        }
+        footer {
+            margin-top: 40px;
+            padding: 15px;
+            background-color: #1f1f1f;
+            color: #777;
+            text-align: center;
+            font-size: 0.9em;
+            border-radius: 0 0 10px 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h2>Add New Product</h2>
+    <form th:action="@{/admin/products/add}" th:object="${product}" method="post">
+
+        <input type="text" th:field="*{name}" placeholder="Product Name"/>
+        <div th:if="${#fields.hasErrors('name')}" class="error" th:errors="*{name}"></div>
+
+        <input type="number" th:field="*{price}" placeholder="Price" min="1" required />
+        <div th:if="${#fields.hasErrors('price')}" class="error" th:errors="*{price}"></div>
+
+        <input type="number" th:field="*{quantity}" placeholder="Quantity" min="0" required />
+        <div th:if="${#fields.hasErrors('quantity')}" class="error" th:errors="*{quantity}"></div>
+
+        <input type="text" th:field="*{imageUrl}" placeholder="Image URL"/>
+
+        <button type="submit">Add to catalog</button>
+    </form>
+    <footer>
+        © 2025 Developed by Meerchuk Roman
+    </footer>
+</div>
+</body>
+</html>

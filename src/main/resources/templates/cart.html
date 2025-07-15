@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            padding: 2em;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 2em;
+        }
+
+        th, td {
+            padding: 1em;
+            text-align: left;
+            border-bottom: 1px solid #444;
+        }
+
+        .product-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 1.2em;
+            margin-top: 2em;
+        }
+
+        .buttons {
+            text-align: right;
+            margin-top: 1em;
+        }
+
+        .buttons form {
+            display: inline;
+        }
+
+        .btn {
+            padding: 0.7em 1.5em;
+            background-color: #00bfff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: #009acc;
+        }
+
+        footer {
+            margin-top: 40px;
+            padding: 15px;
+            background-color: #1f1f1f;
+            color: #777;
+            text-align: center;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Your Cart</h1>
+
+<div th:if="${error}" style="color: red; margin-bottom: 1em;">
+    <p th:text="${error}"></p>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Image</th>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Quantity</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${cart.items}">
+        <td><img th:src="${item.productImageUrl}" class="product-img" alt="Image"/></td>
+        <td th:text="${item.productName}">Name</td>
+        <td><span th:text="${item.productPrice}">0</span>$</td>
+        <td>
+            <span th:text="${item.quantity}">0</span>
+
+            <form th:action="@{/cart/item/delete}" method="post" style="display:inline;">
+                <input type="hidden" name="cartId" th:value="${cart.id}" />
+                <input type="hidden" name="productId" th:value="${item.productId}" />
+                <button class="btn" type="submit" style="margin-left: 10px; background-color: #cc0000; padding: 0.5em 0.9em; font-size: 0.8em;">Remove</button>
+
+            </form>
+        </td>
+    </tr>
+    </tbody>
+
+
+</table>
+
+<div class="total">
+    <p>Total: <span th:text="${cart.totalPrice}">0</span>$</p>
+</div>
+
+<div class="buttons">
+    <form th:action="@{/cart/checkout}" method="post">
+        <button class="btn" type="submit">Pay</button>
+    </form>
+</div>
+<footer>
+    © 2025 Developed by Meerchuk Roman
+</footer>
+</body>
+</html>
+

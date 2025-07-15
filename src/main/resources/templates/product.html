@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Product Catalog</title>
+    <style>
+        /* Dark theme */
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #1f1f1f;
+            padding: 20px;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
+            color: #90caf9;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        /* Added link style */
+        .add-product-link {
+            margin-bottom: 20px;
+            display: inline-block;
+            color: #90caf9;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.7);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s ease;
+        }
+        .product-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 16px rgba(144, 202, 249, 0.7);
+        }
+        .product-image {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            background-color: #333;
+        }
+        .product-name {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+            color: #90caf9;
+            text-align: center;
+        }
+        .product-price {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #a5d6a7;
+        }
+        .product-quantity {
+            font-size: 0.9em;
+            color: #b0bec5;
+        }
+        footer {
+            margin-top: 40px;
+            padding: 15px;
+            background-color: #1f1f1f;
+            color: #777;
+            text-align: center;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+<header>Product Catalog</header>
+
+<div class="container">
+
+    <a href="/admin/products/add" class="add-product-link">Add New Product</a>
+
+    <div class="product-list">
+        <div class="product-card" th:each="product : ${products}">
+            <img th:src="${product.imageUrl}" alt="Product image" class="product-image" />
+            <div class="product-name" th:text="${product.name}">Product Name</div>
+            <div class="product-price" th:text="'Price: $' + ${product.price}">Price</div>
+            <div class="product-quantity" th:text="'Available: ' + ${product.quantity}">Quantity</div>
+
+            <form th:action="@{/admin/products/delete/{id}(id=${product.id})}" method="post">
+                <button type="submit"
+                        style="background-color: #e74643; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; margin-top: 3mm;">
+                    Remove
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+</div>
+
+<footer>
+    © 2025 Developed by Meerchuk Roman
+</footer>
+</body>
+</html>
